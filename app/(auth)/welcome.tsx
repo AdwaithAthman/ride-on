@@ -15,6 +15,7 @@ const Onboarding = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     setActiveIndex(index);
   };
+  const isLastSlide = activeIndex === onboarding.length - 1;
   return (
     <SafeAreaView className="flex h-full items-center justify-center bg-white">
       <TouchableOpacity
@@ -53,7 +54,16 @@ const Onboarding = () => {
           </View>
         ))}
       </Swiper>
-      <CustomButton title="Next" className="w-11/12" mt-10 />
+      <CustomButton
+        title={isLastSlide ? "Get Started" : "Next"}
+        className="w-[90%] mt-10 mb-5"
+        onPress={() =>
+          isLastSlide
+            ? (Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid),
+              router.replace("/(auth)/sign-up"))
+            : swiperRef.current?.scrollBy(1)
+        }
+      />
       <StatusBar style="dark" />
     </SafeAreaView>
   );
