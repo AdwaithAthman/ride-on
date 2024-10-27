@@ -6,6 +6,7 @@ import * as Haptics from "expo-haptics";
 import Swiper from "react-native-swiper";
 import { useRef, useState } from "react";
 import { onboarding } from "@/constants";
+import CustomButton from "@/components/customButton";
 
 const Onboarding = () => {
   const swiperRef = useRef<Swiper>(null);
@@ -52,6 +53,7 @@ const Onboarding = () => {
           </View>
         ))}
       </Swiper>
+      <CustomButton title="Next" className="w-11/12" mt-10 />
       <StatusBar style="dark" />
     </SafeAreaView>
   );
