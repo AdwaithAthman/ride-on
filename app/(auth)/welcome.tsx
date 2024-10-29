@@ -1,5 +1,4 @@
 import { router } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { Text, TouchableOpacity, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
@@ -56,7 +55,7 @@ const Onboarding = () => {
       </Swiper>
       <CustomButton
         title={isLastSlide ? "Get Started" : "Next"}
-        className="w-[90%] mt-10 mb-5"
+        className="w-[80%] mt-10 mb-5"
         onPress={() =>
           isLastSlide
             ? (Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid),
@@ -64,7 +63,6 @@ const Onboarding = () => {
             : swiperRef.current?.scrollBy(1)
         }
       />
-      <StatusBar style="dark" />
     </SafeAreaView>
   );
 };
