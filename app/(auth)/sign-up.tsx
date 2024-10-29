@@ -3,6 +3,9 @@ import { images, icons } from "@/constants";
 import InputField from "@/components/inputField";
 import { useState } from "react";
 import CustomButton from "@/components/customButton";
+import { Link } from "expo-router";
+import * as Haptics from "expo-haptics";
+
 const SignUp = () => {
   const [form, setForm] = useState({
     name: '',
@@ -10,6 +13,7 @@ const SignUp = () => {
     password: ''
   })
   const onSignUpPress = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     console.log(form)
   }
   return (
@@ -45,7 +49,11 @@ const SignUp = () => {
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
 
-          <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-12" />
+          <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-8" />
+          <Link href="/sign-in" className="text-lg text-center text-general-100 mt-10" >
+          <Text>Already have an account?</Text>
+          <Text className="text-primary-500 ml-2">Log In</Text>
+          </Link>
         </View>
       </View>
     </ScrollView>
