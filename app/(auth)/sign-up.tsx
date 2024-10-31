@@ -5,6 +5,7 @@ import { useState } from "react";
 import CustomButton from "@/components/customButton";
 import { Link } from "expo-router";
 import * as Haptics from "expo-haptics";
+import OAuth from "./oAuth";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -50,6 +51,7 @@ const SignUp = () => {
           />
 
           <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-8" />
+          <OAuth />
           <Link href="/sign-in" className="text-lg text-center text-general-100 mt-10" >
           <Text>Already have an account?</Text>
           <Text className="text-primary-500 ml-2">Log In</Text>
