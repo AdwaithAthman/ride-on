@@ -1,4 +1,5 @@
 import { View, Text, ScrollView, Image } from "react-native";
+import { useSignUp } from "@clerk/clerk-expo";
 import { images, icons } from "@/constants";
 import InputField from "@/components/inputField";
 import { useState } from "react";
@@ -8,6 +9,7 @@ import * as Haptics from "expo-haptics";
 import OAuth from "./oAuth";
 
 const SignUp = () => {
+  const { isLoaded, signUp, setActive } = useSignUp()
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -15,7 +17,24 @@ const SignUp = () => {
   })
   const onSignUpPress = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-    console.log(form)
+    // if (!isLoaded) {
+    //   return
+    // }
+
+    // try {
+    //   await signUp.create({
+    //     emailAddress,
+    //     password,
+    //   })
+
+    //   await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
+
+    //   setPendingVerification(true)
+    // } catch (err: any) {
+    //   // See https://clerk.com/docs/custom-flows/error-handling
+    //   // for more info on error handling
+    //   console.error(JSON.stringify(err, null, 2))
+    // }
   }
   return (
     <ScrollView className="flex-1 bg-white">
