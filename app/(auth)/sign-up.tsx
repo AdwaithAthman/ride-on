@@ -1,5 +1,4 @@
 import { View, Text, ScrollView, Image } from "react-native";
-import { useSignUp } from "@clerk/clerk-expo";
 import { images, icons } from "@/constants";
 import InputField from "@/components/inputField";
 import { useState } from "react";
@@ -7,34 +6,75 @@ import CustomButton from "@/components/customButton";
 import { Link } from "expo-router";
 import * as Haptics from "expo-haptics";
 import OAuth from "./oAuth";
+import { useSignUp } from "@clerk/clerk-expo";
+import { useRouter } from 'expo-router';
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
+  const router = useRouter()
   const [form, setForm] = useState({
     name: '',
     email: '',
     password: ''
   })
+  const [verification, setVerification] = useState({
+    state: 'default',
+    error: '',
+    code: ''
+  })
   const onSignUpPress = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-    // if (!isLoaded) {
-    //   return
-    // }
+    if (!isLoaded) {
+      return
+    }
 
-    // try {
-    //   await signUp.create({
-    //     emailAddress,
-    //     password,
-    //   })
+    try {
+      await signUp.create({
+        emailAddress: form.email,
+        password: form.password,
+      })
 
-    //   await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
 
-    //   setPendingVerification(true)
-    // } catch (err: any) {
-    //   // See https://clerk.com/docs/custom-flows/error-handling
-    //   // for more info on error handling
-    //   console.error(JSON.stringify(err, null, 2))
-    // }
+      setVerification({
+        ...verification,
+        state: 'pending'
+      })
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2))
+    }
+  }
+
+  const onPressVerify = async () => {
+    if (!isLoaded) {
+      return
+    }
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code: verification.code,
+      })
+
+      if (completeSignUp.status === 'complete') {
+        await setActive({ session: completeSignUp.createdSessionId })
+        setVerification({
+          ...verification,
+          state: 'success'
+        })
+        router.replace('/')
+      } else {
+        setVerification({
+          ...verification,
+          state: 'failed'
+        })
+      }
+    } catch (err: any) {
+      setVerification({
+        ...verification,
+        error: err.errors[0].longMessage,
+        state: 'failed'
+      })
+    }
   }
   return (
     <ScrollView className="flex-1 bg-white">
@@ -72,8 +112,8 @@ const SignUp = () => {
           <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-8" />
           <OAuth />
           <Link href="/sign-in" className="text-lg text-center text-general-100 mt-10" >
-          <Text>Already have an account?</Text>
-          <Text className="text-primary-500"> Log In</Text>
+            <Text>Already have an account?</Text>
+            <Text className="text-primary-500"> Log In</Text>
           </Link>
         </View>
       </View>
