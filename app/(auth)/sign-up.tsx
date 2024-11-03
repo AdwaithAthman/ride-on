@@ -19,7 +19,7 @@ const SignUp = () => {
     password: ''
   })
   const [verification, setVerification] = useState({
-    state: 'success',
+    state: 'pending',
     error: '',
     code: ''
   })
@@ -120,6 +120,11 @@ const SignUp = () => {
         <Modal isVisible={verification.state === 'success'}>
           <View className="bg-white px-7 py-9 rounded-2xl min-h-[308px]">
             <Image source={images.check} className="w-[110px] h-[110px] mx-auto my-5" resizeMode="contain" />
+            <Text className="text-3xl font-JakartaBold text-center">Account Verified</Text>
+            <Text className="text-base text-gray-400 font-Jakarta text-center mt-2">
+              You have successfully verified the account.
+            </Text>
+            <CustomButton title="Continue" onPress={() => router.replace('/(root)/(tabs)/home')} className="mt-8" />
           </View>
         </Modal>
       </View>
