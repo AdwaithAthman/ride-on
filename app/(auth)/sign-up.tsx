@@ -8,7 +8,7 @@ import * as Haptics from "expo-haptics";
 import OAuth from "./oAuth";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from 'expo-router';
-import ReactNativeModal from "react-native-modal";
+import Modal from "react-native-modal";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
@@ -117,11 +117,11 @@ const SignUp = () => {
             <Text className="text-primary-500"> Log In</Text>
           </Link>
         </View>
-        <ReactNativeModal isVisible={verification.state !== 'success'}>
+        <Modal isVisible={verification.state === 'success'}>
           <View className="bg-white px-7 py-9 rounded-2xl min-h-[308px]">
-            <Image source={images.check} className="w-[110px] h-[110px] mx-auto my-5" />
+            <Image source={images.check} className="w-[110px] h-[110px] mx-auto my-5" resizeMode="contain" />
           </View>
-        </ReactNativeModal>
+        </Modal>
       </View>
     </ScrollView>
   );
