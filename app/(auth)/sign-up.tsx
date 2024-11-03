@@ -19,12 +19,12 @@ const SignUp = () => {
     password: ''
   })
   const [verification, setVerification] = useState({
-    state: 'pending',
+    state: 'default',
     error: '',
     code: ''
   })
   const onSignUpPress = async () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
     if (!isLoaded) {
       return
     }
@@ -47,6 +47,7 @@ const SignUp = () => {
   }
 
   const onPressVerify = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
     if (!isLoaded) {
       return
     }
@@ -117,8 +118,25 @@ const SignUp = () => {
             <Text className="text-primary-500"> Log In</Text>
           </Link>
         </View>
+        <Modal isVisible={verification.state === 'pending'} onModalHide={() => setVerification({ ...verification, state: 'success' })}>
+          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+            <Text className="text-2xl font-JakartaExtraBold mb-2">Verification</Text>
+            <Text className="font-Jakarta mb-5">
+              We've sent a verification code to {form.email}
+            </Text>
+            <InputField
+             label="Code"
+             icon={icons.lock}
+             placeholder="12345"
+             keyboardType="number-pad"
+             onChangeText={(code) => setVerification({ ...verification, code })}
+             />
+             {verification.error && <Text className="text-red-500 text-sm mt-1">{verification.error}</Text>}
+            <CustomButton title="Verify Email" onPress={onPressVerify} className="mt-8 bg-success-500" />
+          </View>
+        </Modal>
         <Modal isVisible={verification.state === 'success'}>
-          <View className="bg-white px-7 py-9 rounded-2xl min-h-[308px]">
+          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
             <Image source={images.check} className="w-[110px] h-[110px] mx-auto my-5" resizeMode="contain" />
             <Text className="text-3xl font-JakartaBold text-center">Account Verified</Text>
             <Text className="text-base text-gray-400 font-Jakarta text-center mt-2">
