@@ -1,21 +1,42 @@
 import { View, Text, ScrollView, Image } from "react-native";
 import { images, icons } from "@/constants";
 import InputField from "@/components/inputField";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import CustomButton from "@/components/customButton";
-import { Link } from "expo-router";
+import { useSignIn } from '@clerk/clerk-expo'
+import { Link, useRouter } from 'expo-router'
 import * as Haptics from "expo-haptics";
 import OAuth from "./oAuth";
 
 const SignIn = () => {
+  const { signIn, setActive, isLoaded } = useSignIn()
+  const router = useRouter()
   const [form, setForm] = useState({
     email: '',
     password: ''
   })
-  const onSignInPress = async () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-    console.log(form)
-  }
+  const onSignInPress =  useCallback(async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+    if (!isLoaded) {
+      return
+    }
+
+    try {
+      const signInAttempt = await signIn.create({
+        identifier: form.email,
+        password: form.password,
+      })
+
+      if (signInAttempt.status === 'complete') {
+        await setActive({ session: signInAttempt.createdSessionId })
+        router.replace('/')
+      } else {
+        console.error(JSON.stringify(signInAttempt, null, 2))
+      }
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2))
+    }
+  }, [isLoaded, form.email, form.password])
   return (
     <ScrollView className="flex-1 bg-white">
       <View className="flex-1 bg-white">
