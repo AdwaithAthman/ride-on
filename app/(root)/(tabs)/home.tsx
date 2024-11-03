@@ -6,7 +6,6 @@ const Home = () => {
   return (
     <SafeAreaView>
       <Text>Home</Text>
-      <StatusBar style="dark" />
     </SafeAreaView>
   );
 };
