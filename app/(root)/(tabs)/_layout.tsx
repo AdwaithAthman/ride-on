@@ -1,6 +1,7 @@
 import { icons } from "@/constants"
 import { Tabs } from "expo-router"
 import { View, Image, ImageSourcePropType } from "react-native"
+import * as Haptics from "expo-haptics"
 
 const TabIcon = ({ focused, source }: { focused: boolean, source: ImageSourcePropType }) => {
     return (
@@ -8,6 +9,24 @@ const TabIcon = ({ focused, source }: { focused: boolean, source: ImageSourcePro
             <View className={`rounded-full w-12 h-12 items-center justify-center ${focused ? "bg-general-400" : ""}`}>
                 <Image source={source} tintColor="white" resizeMode="contain" className="w-7 h-7" />
             </View>
+        </View>
+    )
+}
+
+const HapticButton = (props: any) => {
+    const triggerHaptic = async () => {
+        try {
+            await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        } catch (error) {
+            console.log('Haptics not supported');
+        }
+    };
+    return(
+        <View {...props} onTouchEnd={(e) => {
+            triggerHaptic();
+            props.onPress?.(e);
+        }}>
+                {props.children}
         </View>
     )
 }
@@ -38,7 +57,8 @@ const Layout = () => {
                 options={{
                     title: "Home",
                     headerShown: false,
-                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.home} />
+                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.home} />,
+                    tabBarButton: (props) => <HapticButton {...props} />,
                 }}
             />
             <Tabs.Screen
@@ -46,7 +66,8 @@ const Layout = () => {
                 options={{
                     title: "Rides",
                     headerShown: false,
-                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.list} />
+                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.list} />,
+                    tabBarButton: (props) => <HapticButton {...props} />,
                 }}
             />
             <Tabs.Screen
@@ -54,7 +75,8 @@ const Layout = () => {
                 options={{
                     title: "Chat",
                     headerShown: false,
-                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.chat} />
+                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.chat} />,
+                    tabBarButton: (props) => <HapticButton {...props} />,
                 }}
             />
             <Tabs.Screen
@@ -62,7 +84,8 @@ const Layout = () => {
                 options={{
                     title: "Profile",
                     headerShown: false,
-                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.profile} />
+                    tabBarIcon: ({ focused }) => <TabIcon focused={focused} source={icons.profile} />,
+                    tabBarButton: (props) => <HapticButton {...props} />,
                 }}
             />
         </Tabs>
