@@ -147,6 +147,7 @@ const SignUp = () => {
             </Text>
             <CustomButton title="Continue" onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+              setShowSuccessModal(false);
               router.replace('/(root)/(tabs)/home')
             }} className="mt-8" />
           </View>
