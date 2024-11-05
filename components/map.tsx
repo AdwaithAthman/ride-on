@@ -4,7 +4,7 @@ import React from 'react'
 export default function Map() {
   return (
     <View>
-      <Text>M</Text>
+      <Text>Map</Text>
     </View>
   )
 }
