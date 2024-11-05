@@ -2,9 +2,17 @@ import RideCard from "@/components/rideCard";
 import { icons, images } from "@/constants";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
-import { FlatList, Text, View, Image, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  Text,
+  View,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
+import GoogleTextInput from "@/components/googleTextInput";
 
 const recentRides = [
   {
@@ -116,9 +124,9 @@ const recentRides = [
 export default function Home() {
   const loading = true;
   const { user } = useUser();
-  const handleSignOut = async() => {
+  const handleSignOut = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
-  }
+  };
   return (
     <SafeAreaView className="bg-general-500">
       <FlatList
@@ -146,15 +154,25 @@ export default function Home() {
           </View>
         )}
         ListHeaderComponent={() => (
-         <View className="flex flex-row items-center justify-between my-5">
-           <View className="flex flex-row items-center justify-start gap-x-2">
-            <Text className="text-2xl font-JakartaExtraBold">Welcome,</Text>
-            <Text className="text-xl capitalize font-JakartaMedium">{user?.firstName || user?.emailAddresses[0]?.emailAddress?.split('@')[0]} 👋</Text>
-          </View>
-          <TouchableOpacity onPress={handleSignOut} className="rounded-full justify-center items-center w-10 h-10 bg-white">
-            <Image source={icons.out} className="w-4 h-4" />
-          </TouchableOpacity>
-         </View>
+          <>
+            <View className="flex flex-row items-center justify-between my-5">
+              <View className="flex flex-row items-center justify-start gap-x-2">
+                <Text className="text-2xl font-JakartaExtraBold">Welcome,</Text>
+                <Text className="text-xl capitalize font-JakartaMedium">
+                  {user?.firstName ||
+                    user?.emailAddresses[0]?.emailAddress?.split("@")[0]}{" "}
+                  👋
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={handleSignOut}
+                className="rounded-full justify-center items-center w-10 h-10 bg-white"
+              >
+                <Image source={icons.out} className="w-4 h-4" />
+              </TouchableOpacity>
+            </View>
+            <GoogleTextInput />
+          </>
         )}
       />
     </SafeAreaView>
