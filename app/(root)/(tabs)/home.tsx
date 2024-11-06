@@ -1,4 +1,5 @@
 import RideCard from "@/components/rideCard";
+import * as Location from "expo-location";
 import { icons, images } from "@/constants";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
@@ -14,6 +15,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import GoogleTextInput from "@/components/googleTextInput";
 import Map from "@/components/map";
+import { useLocationStore } from "@/store";
+import { useEffect, useState } from "react";
 
 const recentRides = [
   {
@@ -123,8 +126,33 @@ const recentRides = [
 ];
 
 export default function Home() {
+  const { setUserLocation, setDestinationLocation } = useLocationStore();
+  const [hasPermissions, setHasPermissions] = useState(false);
   const loading = true;
   const { user } = useUser();
+
+  useEffect(() => {
+   const requestLocation = async() => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if(status !== "granted"){
+      setHasPermissions(false);
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync();
+    const address = await Location.reverseGeocodeAsync({
+      latitude: location.coords?.latitude!,
+      longitude: location.coords?.longitude!,
+    });
+
+    setUserLocation({
+      latitude: location.coords?.latitude!,
+      longitude: location.coords?.longitude!,
+      address: `${address[0].name}, ${address[0].region}`,
+    })
+   } 
+
+   requestLocation();
+  }, [])
   const handleSignOut = async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
   };

@@ -7,6 +7,11 @@ export default function Map() {
       provider={PROVIDER_DEFAULT}
       style={styles.map}
       className="rounded-2xl w-full h-full"
+      tintColor="black"
+      mapType="standard"
+      showsPointsOfInterest={false}
+      showsUserLocation={true}
+      userInterfaceStyle="light"
     />
   );
 }
