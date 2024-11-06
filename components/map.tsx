@@ -1,10 +1,20 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet } from "react-native";
+import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
 
 export default function Map() {
   return (
-    <View>
-      <Text>Map</Text>
-    </View>
-  )
+    <MapView
+      provider={PROVIDER_DEFAULT}
+      style={styles.map}
+      className="rounded-2xl w-full h-full"
+    />
+  );
 }
+
+const styles = StyleSheet.create({
+  map: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 20,
+  }
+});

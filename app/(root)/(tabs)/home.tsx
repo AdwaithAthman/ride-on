@@ -129,9 +129,9 @@ export default function Home() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
   };
 
-  const handleDestinationPress = async() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
-  }
+  const handleDestinationPress = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+  };
   return (
     <SafeAreaView className="bg-general-500">
       <FlatList
@@ -176,14 +176,22 @@ export default function Home() {
                 <Image source={icons.out} className="w-4 h-4" />
               </TouchableOpacity>
             </View>
-            <GoogleTextInput icon={icons.search} containerStyle="bg-white shadow-md shadow-neutal-300" handlePress={handleDestinationPress} />
+            <GoogleTextInput
+              icon={icons.search}
+              containerStyle="bg-white shadow-md shadow-neutal-300"
+              handlePress={handleDestinationPress}
+            />
             <>
-            <Text className="text-xl font-JakartaBold mt-5 mb-3">Your Current Location</Text>
-            <View className="flex flex-row items-center bg-transparent h-[300px]">
-              <Map />
-            </View>
+              <Text className="text-xl font-JakartaBold mt-5 mb-3">
+                Your Current Location
+              </Text>
+              <View className="flex flex-row items-center bg-transparent w-full h-[300px]">
+                <Map />
+              </View>
             </>
-            <Text className="text-xl font-JakartaBold mt-5 mb-3">Recent Rides</Text>
+            <Text className="text-xl font-JakartaBold mt-5 mb-3">
+              Recent Rides
+            </Text>
           </>
         )}
       />
