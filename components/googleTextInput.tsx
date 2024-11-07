@@ -1,6 +1,5 @@
 import "react-native-get-random-values";
 import { View, Text, Image } from "react-native";
-import React from "react";
 import { GoogleInputProps } from "@/types/type";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { icons } from "@/constants";
@@ -22,6 +21,7 @@ export default function GoogleTextInput({
         fetchDetails={true}
         placeholder="Where you want to go?"
         debounce={200}
+        keyboardShouldPersistTaps="handled"
         onPress={(data, details = null) => {
           handlePress({
             latitude: details?.geometry.location?.lat!,
@@ -29,6 +29,7 @@ export default function GoogleTextInput({
             address: data.description,
           })
         }}
+        keepResultsAfterBlur={true}
         query={{
           key: googlePlacesApiKey,
           language: "en",
