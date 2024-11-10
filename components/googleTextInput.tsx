@@ -1,8 +1,9 @@
 import "react-native-get-random-values";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Keyboard, ScrollView } from "react-native";
 import { GoogleInputProps } from "@/types/type";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { icons } from "@/constants";
+import { useRef } from "react";
 
 const googlePlacesApiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
@@ -23,6 +24,7 @@ export default function GoogleTextInput({
         debounce={200}
         keyboardShouldPersistTaps="handled"
         onPress={(data, details = null) => {
+          Keyboard.dismiss();
           handlePress({
             latitude: details?.geometry.location?.lat!,
             longitude: details?.geometry.location?.lng!,
@@ -35,6 +37,7 @@ export default function GoogleTextInput({
           language: "en",
           components: "country:in"
         }}
+        listUnderlayColor="transparent"
         renderLeftButton={() => (
           <View className="justify-center items-center w-6 h-6">
             <Image source={icon ? icon : icons.search } className="w-6 h-6" resizeMode="contain" />

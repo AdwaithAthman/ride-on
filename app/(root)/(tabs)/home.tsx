@@ -169,6 +169,7 @@ export default function Home() {
     <SafeAreaView className="bg-general-500">
       <FlatList
         data={recentRides?.slice(0, 5)}
+        keyExtractor={(item) => item.ride_id}
         renderItem={({ item }) => <RideCard ride={item} />}
         className="px-5"
         contentContainerStyle={{
