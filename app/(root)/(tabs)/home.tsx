@@ -212,7 +212,7 @@ export default function Home() {
             </View>
             <GoogleTextInput
               icon={icons.search}
-              containerStyle="bg-white shadow-md shadow-neutal-300"
+              containerStyle="bg-white shadow-md shadow-neutral-300"
               handlePress={handleDestinationPress}
             />
             <>

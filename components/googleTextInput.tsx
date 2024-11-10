@@ -37,7 +37,6 @@ export default function GoogleTextInput({
           language: "en",
           components: "country:in"
         }}
-        listUnderlayColor="transparent"
         renderLeftButton={() => (
           <View className="justify-center items-center w-6 h-6">
             <Image source={icon ? icon : icons.search } className="w-6 h-6" resizeMode="contain" />
@@ -74,6 +73,9 @@ export default function GoogleTextInput({
             borderRadius: 10,
             shadowColor: "#d4d4d4",
             zIndex: 99,
+          },
+          row: {
+            backgroundColor: textInputBackgroundColor || "white",
           }
         }}
       />
