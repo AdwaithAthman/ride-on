@@ -1,7 +1,9 @@
+import CustomButton from "@/components/customButton";
 import GoogleTextInput from "@/components/googleTextInput";
 import RideLayout from "@/components/rideLayout";
 import { icons } from "@/constants";
 import { useLocationStore } from "@/store";
+import { router } from "expo-router";
 import { View, Text } from "react-native";
 
 const FindRide = () => {
@@ -33,6 +35,7 @@ const FindRide = () => {
           handlePress={setDestinationLocation}
         />
       </View>
+      <CustomButton title="Find Now" onPress={() => router.push("/(root)/confirm-ride")} className="mt-5" />
     </RideLayout>
   );
 };

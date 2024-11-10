@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Map from "./map";
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
 import { useRef } from "react";
 import * as Haptics from "expo-haptics";
 
@@ -40,13 +40,17 @@ const RideLayout = ({
         </View>
         <BottomSheet
           ref={bottomSheetRef}
+          enableDynamicSizing={false}
           snapPoints={["40%", "85%"]}
           index={0}
           onChange={handleSheetChange}
+          keyboardBehavior="extend"
+          maxDynamicContentSize={80}
+          android_keyboardInputMode="adjustPan"
         >
-          <BottomSheetScrollView style={{ flex: 1, padding: 20 }}>
+          <BottomSheetView style={{ flex: 1, padding: 20 }}>
             {children}
-          </BottomSheetScrollView>
+          </BottomSheetView>
         </BottomSheet>
       </View>
     </GestureHandlerRootView>
