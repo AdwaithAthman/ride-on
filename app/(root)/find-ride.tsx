@@ -5,6 +5,7 @@ import { icons } from "@/constants";
 import { useLocationStore } from "@/store";
 import { router } from "expo-router";
 import { View, Text } from "react-native";
+import * as Haptics from "expo-haptics";
 
 const FindRide = () => {
   const {
@@ -35,7 +36,10 @@ const FindRide = () => {
           handlePress={setDestinationLocation}
         />
       </View>
-      <CustomButton title="Find Now" onPress={() => router.push("/(root)/confirm-ride")} className="mt-5" />
+      <CustomButton title="Find Now" onPress={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+        router.push("/(root)/confirm-ride")
+      }} className="mt-5" />
     </RideLayout>
   );
 };

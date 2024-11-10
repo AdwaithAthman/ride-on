@@ -10,9 +10,11 @@ import * as Haptics from "expo-haptics";
 const RideLayout = ({
   children,
   title,
+  snapPoints
 }: {
   children: React.ReactNode;
   title?: string;
+  snapPoints?: string[];
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const handleSheetChange = () => {
@@ -32,7 +34,7 @@ const RideLayout = ({
                 />
               </View>
             </TouchableOpacity>
-            <Text className="text-xl font-JakartaSemiBold ml-5">
+            <Text className="text-xl font-JakartaBold ml-5">
               {title || "Go Back"}
             </Text>
           </View>
@@ -41,12 +43,11 @@ const RideLayout = ({
         <BottomSheet
           ref={bottomSheetRef}
           enableDynamicSizing={false}
-          snapPoints={["40%", "85%"]}
+          snapPoints={snapPoints ||["45%", "85%"]}
           index={0}
           onChange={handleSheetChange}
           keyboardBehavior="extend"
-          maxDynamicContentSize={80}
-          android_keyboardInputMode="adjustPan"
+          maxDynamicContentSize={85}
         >
           <BottomSheetView style={{ flex: 1, padding: 20 }}>
             {children}
