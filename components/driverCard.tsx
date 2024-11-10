@@ -4,11 +4,15 @@ import {Image, Text, TouchableOpacity, View} from "react-native";
 import {icons} from "@/constants";
 import {formatTime} from "@/lib/utils";
 import {DriverCardProps} from "@/types/type";
+import * as Haptics from "expo-haptics";
 
 const DriverCard = ({item, selected, setSelected}: DriverCardProps) => {
     return (
         <TouchableOpacity
-            onPress={setSelected}
+            onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+                setSelected();
+            }}
             className={`${
                 selected === item.id ? "bg-general-600" : "bg-general-600/30"
             } flex flex-row items-center justify-between py-5 px-3 rounded-xl mb-2`}

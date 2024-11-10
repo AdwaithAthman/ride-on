@@ -26,7 +26,7 @@ const ConfirmRide = () => {
               title="Select Ride"
               onPress={() => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
-                router.push("/(root)/find-ride");
+                router.push("/(root)/book-ride");
               }}
             />
           </View>
