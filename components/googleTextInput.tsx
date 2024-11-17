@@ -4,6 +4,7 @@ import { GoogleInputProps } from "@/types/type";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { icons } from "@/constants";
 import { useRef } from "react";
+import React from "react";
 
 const googlePlacesApiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
@@ -37,6 +38,7 @@ export default function GoogleTextInput({
           language: "en",
           components: "country:in"
         }}
+        listUnderlayColor="transparent"
         renderLeftButton={() => (
           <View className="justify-center items-center w-6 h-6">
             <Image source={icon ? icon : icons.search } className="w-6 h-6" resizeMode="contain" />
@@ -76,6 +78,8 @@ export default function GoogleTextInput({
           },
           row: {
             backgroundColor: textInputBackgroundColor || "white",
+            shadowColor: "#d4d4d4",
+            position: "relative"
           }
         }}
       />

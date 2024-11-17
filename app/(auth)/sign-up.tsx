@@ -10,6 +10,7 @@ import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from 'expo-router';
 import Modal from "react-native-modal";
 import { fetchAPI } from "@/lib/fetch";
+import React from "react";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
